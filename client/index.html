@@ -12,13 +12,24 @@
           <h1>Calorie Counter</h1>
         </header>
         <form class="form" action="" method="post">
-            <div class="input-field">
-              <input type="text" id="input">
-              <button type="button" id="submit" class="add-button">ADD</button>
+            <div>
+              <label for="meal-input">Name of meal:</label>
+              <input type="text" id="meal-input" class="name-of-meal-input">
+            </div>
+            <div>
+              <label for="calories-input">Calories:</label>
+              <input type="text" id="calories-input" class="calories-input">
+            </div>
+            <div>
+              <label for="date-input">Date:</label>
+              <input type="text" id="date-input" class="date-input">
+            </div>
+            <div>
+              <button type="button" id="submit" class="add-meal-button">ADD MEAL</button>
             </div>
         </form>
-        <div class="content">
-          <ul class="tasks-list"></ul>
+        <div class="meals-list">
+          <ul></ul>
         </div>
       </div>
     </main>
