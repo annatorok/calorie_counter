@@ -6,7 +6,8 @@ var con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'password',
-  database: 'calories'
+  database: 'calories',
+  timezone: 'utc'
 });
 
 function errorHandling (err) {
@@ -39,9 +40,26 @@ var CalorieCounter = (function () {
       callback({ name: req.body.name, calories: req.body.calories, date: req.body.date });
     });
   }
+
+  function deleteOneMeal(req, callback) {
+    con.query("DELETE FROM meal_calories WHERE id = ?", req.params.id, function (err, result) {
+      errorHandling();
+      callback({ result });
+})
+}
+
+  // function filterMeal (req, callback) {
+  //   con.query("SELECT id, name, calories, date FROM meal_calories WHERE date = ?", date, function (err, result) {
+  //     errorHandling();
+  //     callback({date: req.body.date});
+  //   })
+  // }
+
   return {
     listMeals: listMeals,
     addOneMeal: addOneMeal,
+    deleteOneMeal: deleteOneMeal,
+    // filterMeal: filterMeal
   };
 })();
 

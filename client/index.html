@@ -12,27 +12,34 @@
           <h1>Calorie Counter</h1>
         </header>
         <form class="form" action="" method="post">
-            <div>
-              <label for="meal-input">Name of meal:</label>
-              <input type="text" id="meal-input" class="name-of-meal-input">
+            <div>              <input type="text" id="meal-input" class="name-of-meal-input" placeholder="Meal name: eg. Marhaporkolt ">
             </div>
             <div>
-              <label for="calories-input">Calories:</label>
-              <input type="text" id="calories-input" class="calories-input">
+              <input type="number" id="calories-input" class="calories-input" placeholder="Calories: eg. 300 ">
             </div>
             <div>
-              <label for="date-input">Date:</label>
-              <input type="text" id="date-input" class="date-input">
+              <input type="datetime-local" id="date-input" class="date-input" placeholder="Date: eg. 2016-07-18">
             </div>
             <div>
               <button type="button" id="submit" class="add-meal-button">ADD MEAL</button>
             </div>
         </form>
-        <div class="meals-list">
-          <ul></ul>
+        <div class="meals-filter-container">
+          <div class="filter-list">
+            <input type="datetime-local" id="date-input" class="date-input" placeholder="Date: eg. 2016-07-18">
+            <button type="button" id="submit" class="filter-button">FILTER</button>
+            <button type="button" id="submit" class="all-button">ALL</button>
+          </div>
+          <div class="meals-list">
+            <h2>List of meals</h2>
+            <ul></ul>
+          </div>
         </div>
       </div>
     </main>
+    <script src='request.js'></script>
+    <script src='dom.js'></script>
     <script src='frontend.js'></script>
+
   </body>
 </html>
