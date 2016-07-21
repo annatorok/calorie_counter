@@ -1,23 +1,6 @@
 'use strict';
 
-var mysql = require('mysql');
-
-var con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'calories',
-  timezone: 'utc'
-});
-
-function errorHandling (err) {
-  if (err) {
-    console.log(err);
-    return;
-  }
-}
-
-var CalorieCounter = (function () {
+var CalorieCounter = (function (con) {
 
   con.connect(function(err){
     if(err){
@@ -27,6 +10,13 @@ var CalorieCounter = (function () {
     console.log("Connection established");
   });
 
+  function errorHandling (err) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+  }
+
   function listMeals(req, callback) {
     con.query('SELECT * FROM meal_calories', function (err, result) {
       errorHandling(err);
@@ -34,17 +24,17 @@ var CalorieCounter = (function () {
     });
   }
 
-  function addOneMeal(req, callback) {
-    con.query("INSERT INTO meal_calories (name, calories, date) VALUES ('" + req.body.name + "','" + req.body.calories + "','" + req.body.date + "')", function (err, result) {
+  function addOneMeal(item, callback) {
+    con.query("INSERT INTO meal_calories (name, calories, date) VALUES ('" + item.name + "','" + item.calories + "','" + item.date + "')", function (err, result) {
       errorHandling();
-      callback({ name: req.body.name, calories: req.body.calories, date: req.body.date });
+      callback({ name: item.name, calories: item.calories, date: item.date });
     });
   }
 
-  function deleteOneMeal(req, callback) {
-    con.query("DELETE FROM meal_calories WHERE id = ?", req.params.id, function (err, result) {
+  function deleteOneMeal(id, callback) {
+    con.query("DELETE FROM meal_calories WHERE id = ?", id, function (err, result) {
       errorHandling();
-      callback({ result });
+      callback({id: id});
 })
 }
 
@@ -61,6 +51,6 @@ var CalorieCounter = (function () {
     deleteOneMeal: deleteOneMeal,
     // filterMeal: filterMeal
   };
-})();
+});
 
 module.exports = CalorieCounter;

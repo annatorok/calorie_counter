@@ -2,6 +2,22 @@
 
 addButton.addEventListener('click', addMeal);
 
+mealsContainer.addEventListener('click', function (event) {
+  var answer = confirm("Are you sure you want to delete this meal?");
+  if (answer === true) {
+    if (event.target.classList.value === 'delete') {
+      deleteMeal(event, event.target.parentNode.id)
+      return true;
+    }
+  } else {
+    return false;
+  }
+})
+
+filterButton.addEventListener('click', function (event) {
+  domElements.displayFilteredMeals();
+})
+
 
 function getRequest() {
   readRequest.httpRequest('GET', local, '', function (response) {
@@ -16,17 +32,11 @@ function addMeal() {
   })
 };
 
-function deleteMeal() {
-  readRequest.httpRequest('DELETE', local, {id: id}), function (response) {
+function deleteMeal(event, id) {
+  readRequest.httpRequest('DELETE', local + id, '', function (response) {
     document.getElementById(id).remove();
-  }
+    domElements.updateTotal();
+  })
 }
-
-// function filterMeals() {
-//  readRequest.httpRequest('GET', local, {date: req.body.date}, function (response) {
-//   domElements.filerMeal(JSON.parse(response))''
-// })
-// }
-
 
 getRequest();

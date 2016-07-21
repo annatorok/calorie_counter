@@ -71,10 +71,28 @@ button {
 
 .meal-calories {
   position: absolute;
-  left: 240px;
+  left: 220px;
 }
 
 .meal-date {
   position: absolute;
-  left: 430px;
+  left: 390px;
+}
+
+.delete {
+  background-size: contain;
+  width: 24px;
+  height: 24px;
+  background-image: url(delete_icon.png);
+  position: absolute;
+  right: 0px;
+  top: 10px;
+}
+
+.delete:hover {
+  transform: rotateZ(10deg);
+}
+
+.hidden {
+  display: none;
 }

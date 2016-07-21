@@ -2,6 +2,7 @@
 
 var tape = require('tape');
 var meal = require('./db_queries');
+
 var sinon = require('sinon');
 
 tape('true', function(t) {
@@ -25,10 +26,33 @@ tape('proba have been called with 3', function(t) {
 
 tape('addmeal calls query', function (t) {
   var mockConnection = {
-    query: sinon.spy()
+    query: sinon.spy(),
+    connect: function() {}
   };
   var testMealModule = meal(mockConnection);
   testMealModule.addOneMeal({name: "alma"});
   t.ok(mockConnection.query.called);
+  t.end();
+});
+
+tape('addmeal calls query with proper sql', function (t) {
+  var mockConnection = {
+    query: sinon.spy(),
+    connect: function() {}
+  };
+  var testMealModule = meal(mockConnection);
+
+  var testMeal = {
+    name: "alma",
+    calories: 2,
+    date: "ma"
+  };
+
+  var expectedSQL = 'INSERT INTO meal_calories ' +
+    '(name, calories, date)' +
+    ' VALUES (\'alma\', \'2\', \'ma\');';
+
+  testMealModule.addOneMeal(testMeal);
+  t.ok(mockConnection.query.calledWithMatch(expectedSQL));
   t.end();
 });
